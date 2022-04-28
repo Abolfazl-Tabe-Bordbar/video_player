@@ -2,6 +2,7 @@ let VideoPlayer = document.getElementById("VideoPlayer");
 let MyVideo = document.getElementById("MyVideo");
 let play_btn = document.getElementById("play_btn");
 let pauses_btn = document.getElementById("pauses_btn");
+let rest_btn = document.getElementById("rest_btn");
 let back_btn = document.getElementById("back_btn");
 let forward_btn = document.getElementById("forward_btn");
 let online_time = document.getElementById("online_time");
@@ -142,13 +143,27 @@ window.addEventListener("keydown", (e) => {
 
 
 });
-window.addEventListener("fullscreenchange",()=>{
-   if (!document.fullscreenElement) {
-    exit_fullscreen_btn.classList.remove("flex");
-    exit_fullscreen_btn.classList.add("hidden");
+window.addEventListener("fullscreenchange", () => {
+    if (!document.fullscreenElement) {
+        exit_fullscreen_btn.classList.remove("flex");
+        exit_fullscreen_btn.classList.add("hidden");
 
-    fullscreen_btn.classList.remove("hidden");
-    fullscreen_btn.classList.add("flex");
-   }
-})
+        fullscreen_btn.classList.remove("hidden");
+        fullscreen_btn.classList.add("flex");
+    }
+});
+MyVideo.addEventListener("ended", function () {
+    pauses_btn.classList.remove("flex");
+    pauses_btn.classList.add("hidden");
 
+    rest_btn.classList.remove("hidden");
+    rest_btn.classList.add("flex");
+});
+rest_btn.addEventListener("click", function () {
+    this.classList.remove("flex");
+    this.classList.add("hidden");
+    pauses_btn.classList.remove("hidden");
+    pauses_btn.classList.add("flex");
+    MyVideo.currentTime = 0;
+    MyVideo.play();
+});
